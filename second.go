@@ -2,8 +2,8 @@
 package second
 
 func Second() {
-	fmt.Println("jeff")
-	fmt.Println("john")
-	fmt.Println("jess")
-	fmt.Println("joe")
+	fmt.Println("jefF")
+	fmt.Println("johN")
+	fmt.Println("jesS")
+	fmt.Println("joE")
 }

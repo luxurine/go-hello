@@ -1,10 +1,14 @@
 pipeline {
-    agent { docker { image 'golang' } }
+    agent any
     stages {
-        stage('build') {
+        stage('Deploy') {
             steps {
-                sh 'go version'
-            }
+
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(3) {
+                        sh 'ls /root'
+                    }
+                }
         }
     }
 }

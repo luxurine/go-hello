@@ -1,0 +1,49 @@
+name: Go Build
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    name: Build Go Project
+    runs-on: [self-hosted, golang]  # 匹配你注册时的标签
+
+    env:
+      GOPATH: ${{ github.workspace }}/.go
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.3
+
+      - name: Prepare environment
+        run: |
+          mkdir -p $GOPATH
+          go env
+
+      - name: Restore go mod cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}/.go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Build project
+        run: |
+          mkdir -p output
+          go build -o output/foobar main.go
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-build-output
+          path: output/
+          retention-days: 1

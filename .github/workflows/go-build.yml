@@ -12,8 +12,9 @@ jobs:
     runs-on: [arc-runner]  # 匹配你注册时的标签
 
     env:
-      GOPATH: ${{ github.workspace }}/.go
-      LD_LIBRARY_PATH: "/opt/gh-runner/lib:$LD_LIBRARY_PATH"
+      FOO: bar
+      # GOPATH: ${{ github.workspace }}/.go
+      # LD_LIBRARY_PATH: "/opt/gh-runner/lib:$LD_LIBRARY_PATH"
 
     steps:
       - name: Checkout code
@@ -26,16 +27,16 @@ jobs:
 
       - name: Prepare environment
         run: |
-          mkdir -p $GOPATH
+          # mkdir -p $GOPATH
           go env
 
-      - name: Restore go mod cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}/.go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+      # - name: Restore go mod cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ${{ github.workspace }}/.go/pkg/mod
+      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
 
       - name: Build project
         run: |
@@ -44,7 +45,7 @@ jobs:
 
       - name: Sleep for debugging
         # This step is for debugging purposes, it can be removed in production
-        run: sleep 360
+        run: sleep 1
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

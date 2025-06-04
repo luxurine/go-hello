@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build Go Project
-    runs-on: [self-hosted, golang]  # 匹配你注册时的标签
+    runs-on: [arc-runner]  # 匹配你注册时的标签
 
     env:
       GOPATH: ${{ github.workspace }}/.go

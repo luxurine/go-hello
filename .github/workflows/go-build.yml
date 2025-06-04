@@ -9,12 +9,10 @@ on:
 jobs:
   build:
     name: Build Go Project
-    runs-on: [arc-runner]  # 匹配你注册时的标签
+    runs-on: [arc-runner]
 
     env:
       FOO: bar
-      # GOPATH: ${{ github.workspace }}/.go
-      # LD_LIBRARY_PATH: "/opt/gh-runner/lib:$LD_LIBRARY_PATH"
 
     steps:
       - name: Checkout code
@@ -29,14 +27,6 @@ jobs:
         run: |
           # mkdir -p $GOPATH
           go env
-
-      # - name: Restore go mod cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ${{ github.workspace }}/.go/pkg/mod
-      #     key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
 
       - name: Build project
         run: |
